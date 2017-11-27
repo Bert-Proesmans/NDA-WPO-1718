@@ -1,0 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch:400,700');
+
+
+#banner h1 {
+	font-size: 4em;
+	line-height: 1em;
+	margin: 0 0 0.5em 0;
+	padding: 0;
+	color: #FFF;
+	font-family: 'Cabin Sketch', cursive;
+}
+
+#banner p {
+	font-weight: bold;
+	font-family: 'Cabin Sketch', cursive;
+}

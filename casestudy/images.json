@@ -1,0 +1,53 @@
+{
+	"thumbnails" : "thumbnails.json",
+	
+	"01" : {
+		"img" : "images/portfolio/01.jpg",
+		"text" : "Lorem ipsum dolor 1"
+	},
+	
+	"02" : {
+		"img" : "images/portfolio/02.jpg",
+		"text" : "Lorem ipsum dolor 2"
+	},
+	
+	"03" : {
+		"img" : "images/portfolio/03.jpg",
+		"text" : "Lorem ipsum dolor 3"
+	},
+	
+	"04" : {
+		"img" : "images/portfolio/04.jpg",
+		"text" : "Lorem ipsum dolor 4"
+	},
+	
+	"06" : {
+		"img" : "images/portfolio/06.jpg",
+		"text" : "Lorem ipsum dolor 5"
+	},
+	
+	"07" : {
+		"img" : "images/portfolio/07.jpg",
+		"text" : "Lorem ipsum dolor 6"
+	},
+	
+	"08" : {
+		"img" : "images/portfolio/08.jpg",
+		"text" : "Lorem ipsum dolor 7"
+	},
+	
+	"09" : {
+		"img" : "images/portfolio/09.jpg",
+		"text" : "Lorem ipsum dolor 8"
+	},
+	
+	"10" : {
+		"img" : "images/portfolio/10.jpg",
+		"text" : "Lorem ipsum dolor 9"
+	},
+	
+	"11" : {
+		"img" : "images/portfolio/11.jpg",
+		"text" : "Lorem ipsum dolor 10"
+	}
+}

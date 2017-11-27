@@ -1,0 +1,29 @@
+
+
+	
+	<section id="cookies" style="max-height: 100px;">
+		<div>
+			We know you will just click Accept in annoyance and that clicking Nope won't actually change anything, but here is a popup banner to annoy you anyways! <br/>
+		</div>
+		
+		<input id="acceptCookiesButton" value="Accept" class="button" style="padding: 1px; line-height: 1.5em; height: 1.5em; width: 50%;" type="submit" />
+		<input id="disallowCookiesButton" value="Nope" class="button" style="padding: 1px; line-height: 1.5em; height: 1.5em;" type="submit" />
+		
+	</section>
+	
+	<script>
+		$("#acceptCookiesButton").click(function(){
+			document.cookie = "accepted=We are a go for cookies!";
+			$("#cookies").slideUp( { duration: 500, easing: "linear" } );
+		});
+		$("#disallowCookiesButton").click(function(){
+			document.cookie = "accepted=This user does not want cookies!";
+			$("#cookies").slideUp( { duration: 500, easing: "linear" } );
+		});
+		
+		$(function(){
+			if( document.cookie.indexOf("accepted=We are a go for cookies!") >= 0 )
+				$("#cookies").slideUp( { duration: 500, easing: "linear" } );
+		});
+	
+	</script>
