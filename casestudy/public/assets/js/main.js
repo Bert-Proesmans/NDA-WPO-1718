@@ -4,7 +4,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-(function($) {
+function runScript($) {
 
 	skel.breakpoints({
 		xlarge: '(max-width: 1680px)',
@@ -280,4 +280,8 @@
 		$("#nav").css("padding-top", document.documentElement.scrollTop + "px");
 	};
 
-})(jQuery);
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+	runScript(jQuery);
+})
