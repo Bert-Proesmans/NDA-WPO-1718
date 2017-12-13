@@ -10,7 +10,7 @@ var assetsArray = []
 
 // CSS
 addAsset(assetsArray, prefix, cssPrefix + "font-awesome.css")
-addAsset(assetsArray, prefix, cssPrefix + "main.css")
+addAsset(assetsArray, prefix, cssPrefix + "main_v1.css")
 addAsset(assetsArray, prefix, cssPrefix + "sketchFont.css")
 
 // FONTS
@@ -25,7 +25,7 @@ addAsset(assetsArray, prefix, jsPrefix + "jquery.scrollex.js")
 addAsset(assetsArray, prefix, jsPrefix + "jquery.scrolly.min.js")
 addAsset(assetsArray, prefix, jsPrefix + "skel.js")
 addAsset(assetsArray, prefix, jsPrefix + "util.js")
-addAsset(assetsArray, prefix, jsPrefix + "main.js")
+addAsset(assetsArray, prefix, jsPrefix + "main_v1.js")
 
 // HTML
 addAsset(assetsArray, prefix, htmlPrefix + "cookie_statement.html")

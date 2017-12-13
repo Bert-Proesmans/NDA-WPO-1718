@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "css-loader": "^0.28.7",
+    "etag": "^1.8.1",
     "express": "^4.16.2",
     "mime-types": "^2.1.17",
     "spdy": "^3.4.7",
