@@ -1,37 +1,37 @@
 {
 	"01" : {
-		"img" : "images/portfolio/01.jpg"
+		"img" : "images/portfolio/01.thumb.jpg"
 	},
 	
 	"02" : {
-		"img" : "images/portfolio/02.jpg"
+		"img" : "images/portfolio/02.thumb.jpg"
 	},
 	
 	"03" : {
-		"img" : "images/portfolio/03.jpg"
+		"img" : "images/portfolio/03.thumb.jpg"
 	},
 	
 	"04" : {
-		"img" : "images/portfolio/04.jpg"
+		"img" : "images/portfolio/04.thumb.jpg"
 	},
 	
 	"07" : {
-		"img" : "images/portfolio/07.jpg"
+		"img" : "images/portfolio/07.thumb.jpg"
 	},
 	
 	"08" : {
-		"img" : "images/portfolio/08.jpg"
+		"img" : "images/portfolio/08.thumb.jpg"
 	},
 	
 	"09" : {
-		"img" : "images/portfolio/09.jpg"
+		"img" : "images/portfolio/09.thumb.jpg"
 	},
 	
 	"10" : {
-		"img" : "images/portfolio/10.jpg"
+		"img" : "images/portfolio/10.thumb.jpg"
 	},
 	
 	"11" : {
-		"img" : "images/portfolio/11.jpg"
+		"img" : "images/portfolio/11.thumb.jpg"
 	}
 }
