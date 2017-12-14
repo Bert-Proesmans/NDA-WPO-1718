@@ -27,6 +27,12 @@ gulp.task('js-vendor', function() {
     .pipe(gulp.dest('./dist/assets/js'))
 });
 
+gulp.task('js-kaboodle', function() {
+    gulp.src('./public/assets/js/kaboodle.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./dist/assets/js'))
+});
+
 gulp.task('js-main', function() {
     gulp.src([
         './public/assets/js/util.js',
@@ -74,4 +80,7 @@ gulp.task('images', function() {
         .pipe(gulp.dest('./dist/images'))
 });
 
-gulp.task('default', ['css', 'js-vendor', 'js-main', 'json', 'fonts', 'images', 'html']);
+gulp.task('default', ['css', 
+                    'js-vendor', 'js-main', 'js-kaboodle',
+                    'json', 'fonts', 'images', 
+                    'html']);
