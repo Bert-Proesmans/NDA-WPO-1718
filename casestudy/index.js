@@ -20,53 +20,76 @@ app.set("etag", "strong")
 function sendAssetsArray(req, res) {
 	assetsArray.assetsArray.forEach(asset => {
 		((path, content) => {
-			var mimetype = mime.lookup(path)
+			try {
+				var mimetype = mime.lookup(path)
 
-			res.push(path, {
-				response: {
-					"ETag": etag(content),
-					"Cache-Control": "public, max-age=2628000",
-					"content-type": mimetype
-				}
-			}, (err, stream) => {
-				if (err)
-					return
+				res.push(path, {
+					response: {
+						"ETag": etag(content),
+						"Cache-Control": "public, max-age=2628000",
+						"content-type": mimetype
+					}
+				}, (err, stream) => {
+					if (err)
+						return
 
-				stream.end(content)
-			})
+					stream.end(content)
+				})
+			}
+			catch(e) {
+				console.log(e)
+			}
 		})(asset.path, asset.content)
 	});
 }
 
+function trySendResponse(res, filepath) {
+	try {
+		res.sendFile(path.join(__dirname, filepath))
+	}
+	catch (e) {
+		console.log(e)
+	}
+}
+
+function trySendAssetsArray(req, res) {
+	try {
+		sendAssetsArray(req, res)
+	}
+	catch (e) {
+		console.log(e)
+	}
+}
+
 app.get("/", (req, res) => {
-	sendAssetsArray(req, res)
-	res.sendFile(path.join(__dirname, "public/index.html"))
+	trySendAssetsArray(req, res)
+	trySendResponse(res, "public/index.html")
 })
 
 app.get("/index.html", (req, res) => {
-	sendAssetsArray(req, res)
-	res.sendFile(path.join(__dirname, "public/index.html"))
+	trySendAssetsArray(req, res)
+	trySendResponse(res, "public/index.html")
 })
 
 app.get("/closeup.html", (req, res) => {
-	sendAssetsArray(req, res)
-	res.sendFile(path.join(__dirname, "public/closeup.html"))
+	trySendAssetsArray(req, res)
+	trySendResponse(res, "public/closeup.html")
 })
 
 app.get("/images.json", (req, res) => {
 	res.setHeader("Cache-Control", "public, max-age=2628000")
-	res.sendFile(path.join(__dirname, "public/images.json"))
+	trySendResponse(res, "public/images.json")
 })
 
 app.get("/thumbnails.json", (req, res) => {
 	res.setHeader("Cache-Control", "public, max-age=2628000")
-	res.sendFile(path.join(__dirname, "public/thumbnails.json"))
+	trySendResponse(res, "public/thumbnails.json")
 })
 
 
 app.get("/cookie_statement.html", (req, res) => {
 	//sendAssetsArray(req, res)
-	res.sendFile(path.join(__dirname, "public/cookie_statement.html"))
+	trySendResponse(res, "public/cookie_statement.html")
 })
 
 app.use("/images", express.static("public/images", {
