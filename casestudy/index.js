@@ -22,19 +22,17 @@ function sendAssetsArray(req, res) {
 		((path, content) => {
 			try {
 				var mimetype = mime.lookup(path)
-
-				res.push(path, {
+				var stream = res.push(path, {
 					response: {
 						"ETag": etag(content),
 						"Cache-Control": "public, max-age=2628000",
-						"content-type": mimetype
+						"Content-Type": mimetype
 					}
-				}, (err, stream) => {
-					if (err)
-						return
-
-					stream.end(content)
 				})
+				stream.on("error", function(error) {
+					console.log(error)
+				})
+				stream.end(content)
 			}
 			catch(e) {
 				console.log(e)
@@ -115,5 +113,8 @@ var options = {
 	}
 }
 
+var port = process.env.HTTP2_PORT || 8080
 var server = spdy.createServer(options, app)
-server.listen(process.env.HTTP2_PORT || 8080);
+
+console.log("Starting server on port: " + port)
+server.listen(port);
