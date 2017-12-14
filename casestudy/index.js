@@ -61,40 +61,40 @@ function trySendAssetsArray(req, res) {
 
 app.get("/", (req, res) => {
 	trySendAssetsArray(req, res)
-	trySendResponse(res, "public/index.html")
+	trySendResponse(res, "dist/index.html")
 })
 
 app.get("/index.html", (req, res) => {
 	trySendAssetsArray(req, res)
-	trySendResponse(res, "public/index.html")
+	trySendResponse(res, "dist/index.html")
 })
 
 app.get("/closeup.html", (req, res) => {
 	trySendAssetsArray(req, res)
-	trySendResponse(res, "public/closeup.html")
+	trySendResponse(res, "dist/closeup.html")
 })
 
 app.get("/images.json", (req, res) => {
 	res.setHeader("Cache-Control", "public, max-age=2628000")
-	trySendResponse(res, "public/images.json")
+	trySendResponse(res, "dist/images.json")
 })
 
 app.get("/thumbnails.json", (req, res) => {
 	res.setHeader("Cache-Control", "public, max-age=2628000")
-	trySendResponse(res, "public/thumbnails.json")
+	trySendResponse(res, "dist/thumbnails.json")
 })
 
 
 app.get("/cookie_statement.html", (req, res) => {
 	//sendAssetsArray(req, res)
-	trySendResponse(res, "public/cookie_statement.html")
+	trySendResponse(res, "dist/cookie_statement.html")
 })
 
-app.use("/images", express.static("public/images", {
+app.use("/images", express.static("dist/images", {
 	maxAge: "365d"
 }))
 
-app.use("/assets", express.static("public/assets", {
+app.use("/assets", express.static("dist/assets", {
 	maxAge: "30d"
 }))
 

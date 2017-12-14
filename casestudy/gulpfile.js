@@ -40,9 +40,11 @@ gulp.task('js-main', function() {
 gulp.task('json', function() {
     gulp.src('./public/**/*.json')
         .pipe(jsonmin())
+        /*
         .pipe(rename(function (path) {
             path.basename += ".min";
         }))
+        */
         .pipe(gulp.dest('./dist'))
 })
 
@@ -54,15 +56,22 @@ gulp.task('html', function() {
             minifyJS: true,
             removeComments: true,
         }))
+        /*
         .pipe(rename(function (path) {
             path.basename += ".min";
         }))
+        */
         .pipe(gulp.dest('./dist'))
 });
 
 gulp.task('fonts', function() {
     gulp.src('./public/assets/fonts/*')
         .pipe(gulp.dest('./dist/assets/fonts'))
-})
+});
 
-gulp.task('default', ['css', 'js-vendor', 'js-main', 'json', 'fonts', 'html']);
+gulp.task('images', function() {
+    gulp.src('./public/images/**/*')
+        .pipe(gulp.dest('./dist/images'))
+});
+
+gulp.task('default', ['css', 'js-vendor', 'js-main', 'json', 'fonts', 'images', 'html']);
