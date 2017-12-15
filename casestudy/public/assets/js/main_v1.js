@@ -22,13 +22,18 @@ function runScript($) {
 			$("#main").prepend( cookie_statement );
 		});
 
-		var body = document.body;
 		// LazyLoad twitter script
-		var twitter = document.createElement('script');
-		twitter.id = "twitter-wjs";
-		twitter.src = "https://platform.twitter.com/widgets.js";
-		body.appendChild(twitter);
+		var twitter = $("<script />")
+					.attr("id", "twitter-wjs")
+					.attr("src", "https://platform.twitter.com/widgets.js");
+		$body.append(twitter);
 
+		// Lazyload iframes
+		$("#gmaps_iframe")
+			.attr("src", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.34471283061!2d-123.11549306059028!3d45.12367002696269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549551d0023a41f7%3A0x6091c5eca3abfef!2sFirefox+logo!5e1!3m2!1sen!2sbe!4v1511776055165");
+		$("#yt_iframe")
+			.attr("src", "https://www.youtube.com/embed/EdFDJANJJLs");
+		
 		// Fix: Placeholder polyfill.
 		$('form').placeholder();
 
@@ -263,7 +268,7 @@ function loadImageInto(selector, imageSrc, width, height, title, timeout) {
 	var img = $("<img width='" + width + "' height='" + height + "' />").attr('src', imageSrc).attr("title", title);
 	img.on('load', function () {
 		if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
-			window.setTimeout(() => {
+			window.setTimeout(function() {
 				loadImageInto(selector, imageSrc, width, height, title, timeout * 2)
 			}, timeout);
 		} else {
