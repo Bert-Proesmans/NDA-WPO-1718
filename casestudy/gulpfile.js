@@ -6,6 +6,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var jsonmin = require('gulp-jsonmin');
+var closure = require('gulp-closure-compiler-service');
 
 gulp.task('css', function(){
     // Autofollows includes
@@ -24,7 +25,10 @@ gulp.task('js-vendor', function() {
         './public/assets/js/kaboodle.js',
     ])
     .pipe(concat('vendor.min.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
+    .pipe(closure({
+        compilation_level: 'SIMPLE_OPTIMIZATIONS'
+      }))
     .pipe(gulp.dest('./dist/assets/js'))
 });
 /*
@@ -40,7 +44,9 @@ gulp.task('js-main', function() {
         './public/assets/js/main_v1.js',
     ])
     .pipe(concat('main.min.js'))
-    .pipe(uglify())
+    .pipe(closure({
+        compilation_level: 'SIMPLE_OPTIMIZATIONS'
+      }))
     .pipe(gulp.dest('./dist/assets/js'))
 });
 
