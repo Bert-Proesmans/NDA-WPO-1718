@@ -1,37 +1,55 @@
 {
 	"01" : {
-		"img" : "images/portfolio/01.jpg"
+		"img" : "images/portfolio/01.thumb.jpg",
+		"width": 300,
+		"height": 199
 	},
 	
 	"02" : {
-		"img" : "images/portfolio/02.jpg"
+		"img" : "images/portfolio/02.thumb.jpg",
+		"width": 300,
+		"height": 164
 	},
 	
 	"03" : {
-		"img" : "images/portfolio/03.jpg"
+		"img" : "images/portfolio/03.thumb.jpg",
+		"width": 300,
+		"height": 200
 	},
 	
 	"04" : {
-		"img" : "images/portfolio/04.jpg"
+		"img" : "images/portfolio/04.thumb.jpg",
+		"width": 300,
+		"height": 168
 	},
 	
 	"07" : {
-		"img" : "images/portfolio/07.jpg"
+		"img" : "images/portfolio/07.thumb.jpg",
+		"width": 300,
+		"height": 168
 	},
 	
 	"08" : {
-		"img" : "images/portfolio/08.jpg"
+		"img" : "images/portfolio/08.thumb.jpg",
+		"width": 300,
+		"height": 225
 	},
 	
 	"09" : {
-		"img" : "images/portfolio/09.jpg"
+		"img" : "images/portfolio/09.thumb.jpg",
+		"width": 300,
+		"height": 218
 	},
 	
 	"10" : {
-		"img" : "images/portfolio/10.jpg"
+		"img" : "images/portfolio/10.thumb.jpg",
+		"width": 300,
+		"height": 225
 	},
 	
 	"11" : {
-		"img" : "images/portfolio/11.jpg"
+		"img" : "images/portfolio/11.thumb.jpg",
+		"width": 300,
+		"height": 200
 	}
 }
