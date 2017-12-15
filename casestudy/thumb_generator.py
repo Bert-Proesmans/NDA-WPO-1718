@@ -7,7 +7,7 @@ Needs PILLOW to be installed!
 (Works on Python3.X)
 """
 
-size = 300, 300
+size = 700, 700
 
 for infile in glob.glob("*.jpg", recursive=False):
     file, ext = os.path.splitext(infile)
