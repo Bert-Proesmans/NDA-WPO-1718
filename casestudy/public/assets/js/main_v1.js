@@ -29,6 +29,13 @@ function runScript($) {
 					$.get( "cookie_statement.html", function( cookie_statement ) {
 						$("#main").prepend( cookie_statement );
 					});
+
+					var body = document.body;
+					// LazyLoad twitter script
+					var twitter = document.createElement('script');
+					twitter.id = "twitter-wjs";
+					twitter.src = "https://platform.twitter.com/widgets.js";
+					body.appendChild(twitter);
 				
 				}, 1000); // to be 100% sure everything is done 
 			});
