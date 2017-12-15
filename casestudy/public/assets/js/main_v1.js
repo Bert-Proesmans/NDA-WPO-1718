@@ -267,7 +267,7 @@ function loadThumbnails() {
 function loadImageInto(selector, imageSrc, width, height, title, timeout, i) {
 	var currentLocation = window.location;
 	var currentHost = currentLocation.hostname;
-	var ports = [parseInt(currentLocation.port)+1, parseInt(currentLocation.port)+2];
+	var ports = [parseInt(currentLocation.port)-1, parseInt(currentLocation.port)-2];
 
 	var getAssetUrl = function (imagePath, i) {
 		var targetPortIdx = i % ports.length;

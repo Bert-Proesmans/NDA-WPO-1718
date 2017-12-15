@@ -79,7 +79,7 @@ function trySendResponse(res, filepath) {
 
 function trySendAssetsArray(req, res) {
 	try {
-		sendAssetsArray(req, res)
+		// sendAssetsArray(req, res)
 	}
 	catch (e) {
 		console.log(e)
