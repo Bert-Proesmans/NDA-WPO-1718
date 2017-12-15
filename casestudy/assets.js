@@ -1,4 +1,6 @@
 var fs = require('fs')
+var zlib = require("zlib")
+var etag = require("etag")
 
 var prefix = "public/"
 var assetsPrefix = "assets/"
@@ -46,9 +48,16 @@ addAsset(assetsArray, prefix, "thumbnails.json")
 //addAsset(assetsArray, prefix, "images/portfolio/11.jpg")
 
 function addAsset(array, prefix, path) {
+	var originalContent = fs.readFileSync(prefix + path)
+	var zipped = zlib.gzipSync(originalContent)
+	var eTag = etag(originalContent)
+
 	var newAsset = {
 		path: "/" + path,
-		content: fs.readFileSync(prefix + path)
+		originalContent: originalContent,
+		content: zipped,
+		encoding: "gzip",
+		etag: eTag
 	}
 
 	array.push(newAsset)

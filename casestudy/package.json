@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "compression": "^1.7.1",
     "css-loader": "^0.28.7",
     "etag": "^1.8.1",
     "express": "^4.16.2",

@@ -6,8 +6,11 @@ var spdy = require("spdy")
 var express = require("express")
 var mime = require("mime-types")
 var etag = require("etag")
+var compression = require('compression')
+
 
 var assetsArray = require("./assets")
+
 
 const app = express()
 
@@ -17,17 +20,41 @@ const app = express()
 app.enable("etag")
 app.set("etag", "strong")
 
+
+app.use(compression({ filter: shouldCompress }))
+
+function shouldCompress(req, res) {
+	if (req.headers['x-no-compression']) {
+		// don't compress responses with this request header
+		return false
+	}
+
+	// fallback to standard filter function
+	return compression.filter(req, res)
+}
+
 function sendAssetsArray(req, res) {
+	var encodingHeader = req.headers["accept-encoding"]
+	var useEncoding = encodingHeader.indexOf("gzip") !== -1
+
 	assetsArray.assetsArray.forEach(asset => {
-		((path, content) => {
+		((asset, useEncoding) => {
 			try {
-				var mimetype = mime.lookup(path)
-				var stream = res.push(path, {
-					response: {
-						"ETag": etag(content),
-						"Cache-Control": "public, max-age=2628000",
-						"Content-Type": mimetype
-					}
+				var mimetype = mime.lookup(asset.path)
+				var content = asset.originalContent
+				var responseObject = {
+					"ETag": asset.etag,
+					"Cache-Control": "public, max-age=2628000",
+					"Content-Type": mimetype,
+				}
+				
+				if(useEncoding) {
+					responseObject["content-encoding"] = asset.encoding
+					content = asset.content
+				}
+
+				var stream = res.push(asset.path, {
+					response: responseObject
 				})
 				stream.on("error", function(error) {
 					console.log(error)
@@ -37,7 +64,7 @@ function sendAssetsArray(req, res) {
 			catch(e) {
 				console.log(e)
 			}
-		})(asset.path, asset.content)
+		})(asset, useEncoding)
 	});
 }
 
