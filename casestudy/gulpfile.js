@@ -21,18 +21,19 @@ gulp.task('js-vendor', function() {
         './public/assets/js/jquery.poptrox.js', 
         './public/assets/js/jquery.scrollex.js',
         './public/assets/js/jquery.scrolly.min.js',
+        './public/assets/js/kaboodle.js',
     ])
     .pipe(concat('vendor.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./dist/assets/js'))
 });
-
+/*
 gulp.task('js-kaboodle', function() {
     gulp.src('./public/assets/js/kaboodle.js')
         .pipe(uglify())
         .pipe(gulp.dest('./dist/assets/js'))
 });
-
+*/
 gulp.task('js-main', function() {
     gulp.src([
         './public/assets/js/util.js',
@@ -81,6 +82,6 @@ gulp.task('images', function() {
 });
 
 gulp.task('default', ['css', 
-                    'js-vendor', 'js-main', 'js-kaboodle',
+                    'js-vendor', 'js-main', /*'js-kaboodle',*/
                     'json', 'fonts', 'images', 
                     'html']);
