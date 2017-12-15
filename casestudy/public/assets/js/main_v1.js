@@ -232,7 +232,7 @@ function runScript($) {
 function loadThumbnails() {
 	if (window.location.href.indexOf("index.html") >= 0) {
 		$.get("images.json", function(images) {
-			console.log(images);
+			// console.log(images);
 			var container = $("#contentContainer");
 			var imageKeys = Object.keys(images);
 
