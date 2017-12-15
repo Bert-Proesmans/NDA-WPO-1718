@@ -5,7 +5,6 @@
 */
 
 function runScript($) {
-
 	skel.breakpoints({
 		xlarge: '(max-width: 1680px)',
 		large: '(max-width: 1280px)',
@@ -15,203 +14,139 @@ function runScript($) {
 	});
 
 	$(function() {
+		var	$window = $(window), $body = $('body');
 
-		var	$window = $(window),
-			$body = $('body');
+		$body.removeClass('is-loading'); 
+		
+		$.get( "cookie_statement.html", function( cookie_statement ) {
+			$("#main").prepend( cookie_statement );
+		});
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
-
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-loading'); 
-					
-					$.get( "cookie_statement.html", function( cookie_statement ) {
-						$("#main").prepend( cookie_statement );
-					});
-
-					var body = document.body;
-					// LazyLoad twitter script
-					var twitter = document.createElement('script');
-					twitter.id = "twitter-wjs";
-					twitter.src = "https://platform.twitter.com/widgets.js";
-					body.appendChild(twitter);
-				
-				}, 1000); // to be 100% sure everything is done 
-			});
+		var body = document.body;
+		// LazyLoad twitter script
+		var twitter = document.createElement('script');
+		twitter.id = "twitter-wjs";
+		twitter.src = "https://platform.twitter.com/widgets.js";
+		body.appendChild(twitter);
 
 		// Fix: Placeholder polyfill.
-			$('form').placeholder();
+		$('form').placeholder();
 
 		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
+		skel.on('+medium -medium', function() {
+			$.prioritize(
+				'.important\\28 medium\\29',
+				skel.breakpoint('medium').active
+			);
+		});
 
 		// Scrolly.
-			$('.scrolly').scrolly();
+		$('.scrolly').scrolly();
 
 		// Gallery.
-			$('.gallery').each(function() {
+		$('.gallery').each(function() {
+			var	$gallery = $(this), $content = $gallery.find('.content');
 
-				var	$gallery = $(this),
-					$content = $gallery.find('.content');
+			// Poptrox.
+			/*
+				$content.poptrox({
+					usePopupCaption: true
+				});
+			*/
 
-				// Poptrox.
-				/*
-					$content.poptrox({
-						usePopupCaption: true
-					});
-				*/
+			// Tabs.
+			$gallery.each( function() {
 
-				// Tabs.
-					$gallery.each( function() {
+				var $this = $(this), $tabs = $this.find('.tabs a'), media = $this.find('.media');
 
-						var $this = $(this),
-							$tabs = $this.find('.tabs a'),
-							$media = $this.find('.media');
+				$tabs.on('click', function(e) {
 
-						$tabs.on('click', function(e) {
+					var $this = $(this),
+						tag = $this.data('tag');
 
-							var $this = $(this),
-								tag = $this.data('tag');
+					// Prevent default.
+						e.preventDefault();
 
-							// Prevent default.
-							 	e.preventDefault();
+					// Remove active class from all tabs.
+						$tabs.removeClass('active');
 
-							// Remove active class from all tabs.
-								$tabs.removeClass('active');
+					// Reapply active class to current tab.
+						$this.addClass('active');
 
-							// Reapply active class to current tab.
-								$this.addClass('active');
+					// Hide media that do not have the same class as the clicked tab.
+						$media
+							.fadeOut('fast')
+							.each(function() {
 
-							// Hide media that do not have the same class as the clicked tab.
-								$media
-									.fadeOut('fast')
-									.each(function() {
+								var $this = $(this);
 
-										var $this = $(this);
+								if ($this.hasClass(tag))
+									$this
+										.fadeOut('fast')
+										.delay(200)
+										.queue(function(next) {
+											$this.fadeIn();
+											next();
+										});
 
-										if ($this.hasClass(tag))
-											$this
-												.fadeOut('fast')
-												.delay(200)
-												.queue(function(next) {
-													$this.fadeIn();
-													next();
-												});
+							});
 
-									});
-
-						});
-
-					});
-
+				});
 
 			});
-		
-			if( window.location.href.indexOf("index.html") >= 0 ){
-				$.get( "images.json", function( fullImages ) {
-					
-					var thumbnailsLink = fullImages["thumbnails"];
-					
-					$.get( thumbnailsLink, function( thumbnails ) {
-						
-						_.forOwn(fullImages, function(value, key) {
-							
-							if( key == "thumbnails" )
-								return;
-							
-							var container = $("#contentContainer");
-							
-							var thumbnail = thumbnails[key];
-							if( !thumbnail )
-								thumbnail = value.img;
-							else
-								thumbnail = thumbnail.img; 
-							
-							var media = "";
-							media += '<div class="media">';
-							
-								media += '<a href="'+ value.img +'">';
-									media += '<img src="'+ thumbnail +'" alt="" title="'+ value.text +'" />';
-								media += '</a>';
-								
-								media += '<a data-poptrox="ignore" class="closeupLink" href="closeup.html?closeupID='+ key +'"><span class="icon fa-external-link-square"></span></a>';
-							
-							media += '</div>';
-							
-							container.append(media);
-						});
-						
-						$content = $('.gallery').find('.content');
+		});
 
-						// Poptrox.
-						$content.poptrox({
-							usePopupCaption: true
-						});
-					});
-				});
-			}
-			else{ // closeup
-			
-				$.get( "images.json", function( fullImages ) {
-					
-					var urlParams = new URLSearchParams(window.location.search);
-					var currentImageID = urlParams.get("closeupID");
-					
-					if( !currentImageID )
-						currentImageID = "01";
-					
-					var img = fullImages[ currentImageID ];
-					if( !img ){
-						currentImageID = Object.keys(fullImages)[0]; 
-						img = fullImages[ currentImageID ];
-					}
-					
-					var prevID = undefined;
-					var nextID = undefined;
-					var keys = Object.keys(fullImages); 
-					keys.splice( keys.indexOf("thumbnails"), 1 );
-					
-					for( var i = 0; i < keys.length; ++i ){
-						if( keys[i] == currentImageID ){
-							if( i > 0 )
-								prevID = keys[i - 1];
-							if( i < (keys.length - 1) )
-								nextID = keys[i + 1];
-						}
-					}
-					
-					$($(".gallery").find(".special").find("h2")[0]).html("" + img.text);
-					
-					var container = $("#contentContainer");
-					var media = "";
-					media += '<div class="closeup">';
-					
-						//media += "<h3>" + img.text + "</h3>";
-						media += '<img src="'+ img.img +'" alt="" title="'+ img.text +'" />';
-					
-					media += '</div>';
-					
-					container.append(media);
-					
-					if( prevID ){
-						$("#prevCloseup").attr("href", "closeup.html?closeupID=" + prevID);
-						$("#prevCloseup").show();
-					}
-					if( nextID ){
-						$("#nextCloseup").attr("href", "closeup.html?closeupID=" + nextID);
-						$("#nextCloseup").show();
-					}
-				});
-			}
 		
-		
-		
+		if(window.location.pathname.endsWith("closeup.html")) { // closeup
+			$.get( "images.json", function( fullImages ) {
+				var urlParams = new URLSearchParams(window.location.search);
+				var currentImageID = urlParams.get("closeupID");
+				
+				if( !currentImageID )
+					currentImageID = "01";
+				
+				var img = fullImages[ currentImageID ];
+				if( !img ){
+					currentImageID = Object.keys(fullImages)[0]; 
+					img = fullImages[ currentImageID ];
+				}
+				
+				var prevID = undefined;
+				var nextID = undefined;
+				var keys = Object.keys(fullImages); 
+				
+				for( var i = 0; i < keys.length; ++i ){
+					if( keys[i] == currentImageID ){
+						if( i > 0 )
+							prevID = keys[i - 1];
+						if( i < (keys.length - 1) )
+							nextID = keys[i + 1];
+					}
+				}
+				
+				$($(".gallery").find(".special").find("h2")[0]).html("" + img.text);
+				
+				var container = $("#contentContainer");
+				var media = "";
+				media += '<div class="closeup">';
+				
+					//media += "<h3>" + img.text + "</h3>";
+					media += '<img src="'+ img.image.img +'" alt="" title="'+ img.text +'" />';
+				
+				media += '</div>';
+				
+				container.append(media);
+				
+				if( prevID ){
+					$("#prevCloseup").attr("href", "closeup.html?closeupID=" + prevID);
+					$("#prevCloseup").show();
+				}
+				if( nextID ){
+					$("#nextCloseup").attr("href", "closeup.html?closeupID=" + nextID);
+					$("#nextCloseup").show();
+				}
+			});
+		}
 		
 		
 		$("#nav-right a").click(function(evt){
@@ -289,6 +224,60 @@ function runScript($) {
 
 };
 
+function loadThumbnails() {
+	if (window.location.href.indexOf("index.html") >= 0) {
+		$.get("images.json", function(images) {
+			console.log(images);
+			var container = $("#contentContainer");
+			var imageKeys = Object.keys(images);
+
+			for(var i = 0; i < imageKeys.length; i++) {
+				var imageContainer = images[imageKeys[i]];
+				var image = imageContainer.image;
+				var thumbnail = imageContainer.thumbnail;
+				//var imgSrc = thumbnail.img;
+				var imgSrc = "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="; // 1x1 Gray pixel
+
+				var media = "<div id='thumbnail-" + imageContainer.key + "' class='media'>" +
+				"<a href='" + image.img + "'>" +
+					"<img width='" + image.width + "' height='" + image.height + "' src='" + imgSrc + "' title='" + imageContainer.text + "'>" +
+				"</a>" + 
+				'<a data-poptrox="ignore" class="closeupLink" href="closeup.html?closeupID=' + imageContainer.key + '"><span class="icon fa-external-link-square"></span></a>' +
+				'</div>';
+				container.append(media);
+				
+				loadImageInto("#thumbnail-" + imageContainer.key + " > a:first-child", thumbnail.img, image.width, image.height, imageContainer.text, 1000);
+			}
+
+			$content = $('.gallery').find('.content');
+
+			// Poptrox.
+			$content.poptrox({
+				usePopupCaption: true
+			});
+		});
+	}
+}
+
+function loadImageInto(selector, imageSrc, width, height, title, timeout) {
+	var img = $("<img width='" + width + "' height='" + height + "' />").attr('src', imageSrc).attr("title", title);
+	img.on('load', function () {
+		if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+			window.setTimeout(() => {
+				loadImageInto(selector, imageSrc, width, height, title, timeout * 2)
+			}, timeout);
+		} else {
+			var element = $(selector);
+			if(element.length > 0) {
+				element.empty();
+				element.append(img);
+			}
+		}
+	});
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
+	loadThumbnails(jQuery);
 	runScript(jQuery);
 })
